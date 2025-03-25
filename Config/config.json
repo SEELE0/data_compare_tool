@@ -1,0 +1,18 @@
+{
+    "name":"test",
+    "num":2,
+    "sites": [
+        { "UpStream_Type":"MYSQL",
+          "TableName_Upstream":"TableName1",
+          "DownStream_Type":"REDSHIFT",
+          "TableName_DownStream":"TableName2",
+          "filter":"where start_data > {} and end_date <{}"
+         },
+        { "UpStream_Type":"MYSQL",
+          "TableName_Upstream":"TableName1",
+          "DownStream_Type":"REDSHIFT",
+          "TableName_DownStream":"TableName2",
+          "filter":"where start_data > {} and end_date <{}"
+         }
+    ]
+}
