@@ -37,9 +37,9 @@ class ConfigReader:
     def get(self, key):
         return self.config_data.get(key, None)
 
-## 测试用例
-if __name__ == '__main__':
-    config_path = './config.json'
-    config_reader = ConfigReader(config_path)
-    config_data = config_reader.config_data
-    print(config_data)
+# ## 测试用例
+# if __name__ == '__main__':
+#     config_path = './config.json'
+#     config_reader = ConfigReader(config_path)
+#     config_data = config_reader.config_data
+#     print(config_data)
