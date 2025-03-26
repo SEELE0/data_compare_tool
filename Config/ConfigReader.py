@@ -6,7 +6,7 @@ class ConfigReader:
     def __init__(self, config_file, type='json'):
         self.config_file = config_file  # 配置文件路径
         self.type = type
-        self.config_data = {}
+        self.config_data = []
         self.load_config()
 
     def load_config(self, type='json'):
@@ -18,7 +18,7 @@ class ConfigReader:
     def load_json(self):
         try:
             with open(self.config_file, 'r') as file:
-                config_data = json.loads(file.read())
+                config_data = json.loads(file.read())['sites']
                 return config_data
         except FileNotFoundError:
             print(f"Configuration file {self.config_file} not found.")
@@ -36,3 +36,10 @@ class ConfigReader:
 
     def get(self, key):
         return self.config_data.get(key, None)
+
+## 测试用例
+if __name__ == '__main__':
+    config_path = './config.json'
+    config_reader = ConfigReader(config_path)
+    config_data = config_reader.config_data
+    print(config_data)

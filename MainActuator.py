@@ -48,7 +48,7 @@ class MainActuator:
 
         Datafactory = Sourcefactory()
         # config_data = ConfigReader('config_path').config_data
-        for config_row in config_data['sites']:
+        for config_row in config_data:
             df1, df2 = Datafactory.filter_same_colname(
                 Datafactory.create_entity(config_row['UpStream_Type'], config_row['filter']),
                 Datafactory.create_entity(config_row['DownStream_Type'], config_row['filter'])
