@@ -21,14 +21,16 @@ class Sourcefactory:
 
     def filter_same_colname(self, df1: DataFrame, df2: DataFrame):
         # 获取两个DataFrame的列名
-        columns1 = [col.lower() for col in df1.columns.tolist()]
-        columns2 = [col.lower() for col in df2.columns.tolist()]
+        columns1 = {col.lower(): col for col in df1.columns.tolist()}
+        columns2 = {col.lower(): col for col in df2.columns.tolist()}
 
         # 找到相同的列名
-        same_columns = set(columns1) & set(columns2)
+        same_columns = set(columns1.keys()) & set(columns2.keys())
         #
-        df1 = df1.filter(items=same_columns)
-        df2 = df2.filter(items=same_columns)
+        df1 = df1.filter(items=[columns1[col] for col in same_columns])
+        df2 = df2.filter(items=[columns2[col] for col in same_columns])
 
         return df1, df2
+
+
 
