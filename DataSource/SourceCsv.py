@@ -13,10 +13,10 @@ class SourceCsv(Source_Hub):
 
     # 获取数据
     def get_data(self):
-        # 获取当前文件的绝对路径
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        # 拼接文件名和路径
-        file_path = os.path.join(current_dir, 'data', 'test.csv')
+        # # 获取当前文件的绝对路径
+        # current_dir = os.path.dirname(os.path.abspath(__file__))
+        # # 拼接文件名和路径
+        # file_path = os.path.join(current_dir, 'data', 'test.csv')
         # 读取csv文件
-        df = pd.read_csv(file_path, encoding='utf-8')
+        df = pd.read_csv(self.file_path, encoding='utf-8')
         return df
