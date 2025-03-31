@@ -28,32 +28,32 @@ class MainActuator:
         # return comparison_df[~comparison_df[key_columns].isin(df1[key_columns])]
         return comparison_df
 
-    # 找出找出 df1 中有但 df2 中没有的记录 (方案2)
-    # 左连接后 将 判断 右侧df2 表字段全为空的 字段 这种数据 我们可以认为是df1中 有但是df2中缺失的数据
-    @staticmethod
-    def find_missing_records_2(df1: DataFrame, df2: DataFrame,key_columns):
-        key_columns = key_columns.split(',')
-        check_columns = [col for col in df1.columns if col not in key_columns]
-        check_columns = [f'{x}_df2' for x in check_columns]
-        left_merge = df1.merge(df2, how='left', on=key_columns, suffixes=('_df1', '_df2'))
-        # Identify rows in df1 that are missing in df2 by checking if all df2 fields are null
-        missing_in_df2 = left_merge[left_merge[check_columns].isnull().all(axis=1)]
-        missing_in_df2 = df1[df1['name'].isin(missing_in_df2['name'])]
-        # print(missing_in_df2)
-        return missing_in_df2
-
-    # 找出 df2 中有但 df1 中没有的记录 (方案2)
-    @staticmethod
-    def find_extra_records_2(df1: DataFrame, df2: DataFrame,key_columns):
-        key_columns = key_columns.split(',')
-        check_columns = [col for col in df2.columns if col not in key_columns]
-        check_columns = [f'{x}_df1' for x in check_columns]
-        left_merge = df2.merge(df1, how='left', on=key_columns, suffixes=('_df2', '_df1'))
-        # Identify rows in df2 that are missing in df1 by checking if all df1 fields are null
-        missing_in_df1 = left_merge[left_merge[check_columns].isnull().all(axis=1)]
-        missing_in_df1 = df2[df2['name'].isin(missing_in_df1['name'])]
-        # print(missing_in_df1)
-        return missing_in_df1
+    # # 找出找出 df1 中有但 df2 中没有的记录 (方案2)
+    # # 左连接后 将 判断 右侧df2 表字段全为空的 字段 这种数据 我们可以认为是df1中 有但是df2中缺失的数据
+    # @staticmethod
+    # def find_missing_records(df1: DataFrame, df2: DataFrame,key_columns):
+    #     key_columns = key_columns.split(',')
+    #     check_columns = [col for col in df1.columns if col not in key_columns]
+    #     check_columns = [f'{x}_df2' for x in check_columns]
+    #     left_merge = df1.merge(df2, how='left', on=key_columns, suffixes=('_df1', '_df2'))
+    #     # Identify rows in df1 that are missing in df2 by checking if all df2 fields are null
+    #     missing_in_df2 = left_merge[left_merge[check_columns].isnull().all(axis=1)]
+    #     missing_in_df2 = df1[df1['name'].isin(missing_in_df2['name'])]
+    #     # print(missing_in_df2)
+    #     return missing_in_df2
+    #
+    # # 找出 df2 中有但 df1 中没有的记录 (方案2)
+    # @staticmethod
+    # def find_extra_records(df1: DataFrame, df2: DataFrame,key_columns):
+    #     key_columns = key_columns.split(',')
+    #     check_columns = [col for col in df2.columns if col not in key_columns]
+    #     check_columns = [f'{x}_df1' for x in check_columns]
+    #     left_merge = df2.merge(df1, how='left', on=key_columns, suffixes=('_df2', '_df1'))
+    #     # Identify rows in df2 that are missing in df1 by checking if all df1 fields are null
+    #     missing_in_df1 = left_merge[left_merge[check_columns].isnull().all(axis=1)]
+    #     missing_in_df1 = df2[df2['name'].isin(missing_in_df1['name'])]
+    #     # print(missing_in_df1)
+    #     return missing_in_df1
 
     # 找出 df1 和 df2 中 主键都存在 但是值不相同的记录  (方案一)
     # 生成
