@@ -32,3 +32,25 @@ if __name__ == '__main__':
             Datafactory.create_entity(config_row['UpStream_Type'], config_row['filter']).fillna('Null'),
             Datafactory.create_entity(config_row['DownStream_Type'], config_row['filter']).fillna('Null')
         )
+        find_different_records = MainActuator.find_different_records(df1, df2, key_columns=config_row['key'])
+
+        # 方案一写法
+        missing_records_df = MainActuator.find_missing_records(df1, df2)
+        filtered_missing_df = missing_records_df[
+            ~missing_records_df.set_index(config_row['key'].split(',')).index
+            .isin(
+                find_different_records.set_index(config_row['key'].split(',')).index
+            )]
+
+        extra_records_df = MainActuator.find_extra_records(df1, df2)
+        filtered_extra_df = extra_records_df[
+            ~extra_records_df.set_index(config_row['key'].split(',')).index
+            .isin(
+                find_different_records.set_index(config_row['key'].split(',')).index
+            )]
+
+        # # 方案二写法
+        # missing_records_df = MainActuator.find_missing_records(df1, df2, key_columns=config_row['key'])
+        # extra_records_df = MainActuator.find_extra_records(df1, df2, key_columns=config_row['key'])
+
+        ##  这里开始 进入后处理

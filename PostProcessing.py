@@ -21,6 +21,16 @@ class PostProcessing:
 
         return result
 
+
+    #    name   num_df1  team_df1   num_df2  team_df2
+    # 0  zhou  ** 11 **        af  ** 24 **        af
+    # 1  kimi   ** 2 **  ** af **   ** 0 **  ** na **
+
+    # gap类型     Source   表名    name     num              team
+    # 数据存在差异  上游   member    zhou   ** 11 **          af
+    # 数据存在差异  下游   member    zhou   ** 24 **          af
+
+
     def save_file(self, file_path):
         result = self.get_data()
         result.to_csv(file_path, index=False)
