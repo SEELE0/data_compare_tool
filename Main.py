@@ -29,9 +29,14 @@ if __name__ == '__main__':
     # config_data = ConfigReader('config_path').config_data
     for config_row in config_data:
         df1, df2 = Datafactory.filter_same_colname(
-            Datafactory.create_entity(config_row['UpStream_Type'], config_row['filter']).fillna('Null'),
-            Datafactory.create_entity(config_row['DownStream_Type'], config_row['filter']).fillna('Null')
+            Datafactory.create_entity(config_row['UpStream_Type'],
+                                      config_row['TableName_Upstream'],
+                                      config_row['filter']).fillna('Null'),
+            Datafactory.create_entity(config_row['DownStream_Type'],
+                                      config_row['TableName_DownStream'],
+                                      config_row['filter']).fillna('Null')
         )
+
         find_different_records = MainActuator.find_different_records(df1, df2, key_columns=config_row['key'])
 
         # 方案一写法
