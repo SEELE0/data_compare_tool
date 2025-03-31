@@ -1,1 +1,5 @@
 *.ini
+config.json
+./DataSource/__pycache__/
+./Config/__pycache__/
+__pycache__/
