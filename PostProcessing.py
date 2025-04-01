@@ -7,7 +7,6 @@ class PostProcessing:
 
     @staticmethod
     def process_missing_extract_records(df, type, table_name):
-        # 确保 df 是一个独立的 DataFrame
         df = df.copy() if not df.empty else df
 
         if not df.empty:
@@ -36,7 +35,6 @@ class PostProcessing:
         # 数据存在差异  上游   member    kimi   ** 2 **          ** af **
         # 数据存在差异  下游   member    kimi   ** 0 **          ** na **
 
-        # 确保 df 是一个独立的 DataFrame
         df = df.copy() if not df.empty else df
 
         key_columns = key_columns.split(',')
