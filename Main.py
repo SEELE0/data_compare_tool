@@ -4,6 +4,7 @@ from Config.ConfigReader import ConfigReader
 from DataSource.SourceCsv import SourceCsv
 from DataSource.Sourcefactory import Sourcefactory
 from MainActuator import MainActuator
+from PostProcessing import PostProcessing
 import pandas as pd
 
 if __name__ == '__main__':
@@ -58,4 +59,10 @@ if __name__ == '__main__':
         # missing_records_df = MainActuator.find_missing_records(df1, df2, key_columns=config_row['key'])
         # extra_records_df = MainActuator.find_extra_records(df1, df2, key_columns=config_row['key'])
 
-        ##  这里开始 进入后处理
+        # 这里开始 进入后处理
+        PostProcessing.process_diff_records(find_different_records, config_row['key'], 'test_upstream.csv',
+                                            'test_downstream.csv')
+        PostProcessing.process_missing_extract_records(filtered_missing_df, 'missing_records',
+                                                       'test_upstream.csv')
+        PostProcessing.process_missing_extract_records(filtered_extra_df, 'extra_records',
+                                                       'test_downstream.csv')
