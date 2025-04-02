@@ -1,0 +1,6 @@
+gap类型,Source,表名,num,team,name
+下游系统数据丢失,,C:\Personal_file\1_Code\Personal_code\data_compare\DataSource\csv\test_downstream.csv,11,af,kimi
+数据存在差异,上游,C:\Personal_file\1_Code\Personal_code\data_compare\DataSource\csv\test_upstream.csv,zhou,24,** af **
+数据存在差异,下游,C:\Personal_file\1_Code\Personal_code\data_compare\DataSource\csv\test_downstream.csv,zhou,24,** sub **
+数据存在差异,上游,C:\Personal_file\1_Code\Personal_code\data_compare\DataSource\csv\test_upstream.csv,bot,77,** benz **
+数据存在差异,下游,C:\Personal_file\1_Code\Personal_code\data_compare\DataSource\csv\test_downstream.csv,bot,77,** sub **
