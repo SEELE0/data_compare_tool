@@ -5,6 +5,8 @@ from DataSource import *
 from DataSource.Source_Hub import Source_Hub
 from Config.ConfigReader import ConfigReader
 from DataSource.SourceCsv import SourceCsv
+from DataSource.SourceCrm_ali import SourceCrm_ali
+from DataSource.SourceRedshift import SourceRedshift
 import pandas as pd
 
 

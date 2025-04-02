@@ -6,10 +6,10 @@ import os
 class SourceCsv(Source_Hub):
     # def __init__(self, source):
     #     self.source = source
-    def __init__(self, file_path, filter=None):
+    def __init__(self, file_path, filter_rule=None):
         # 初始化方法
         self.file_path = file_path
-        self.filter = filter
+        self.filter = filter_rule
 
     # 获取数据
     def get_data(self):
