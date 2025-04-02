@@ -7,7 +7,7 @@ class PostProcessing:
 
     @staticmethod
     def process_missing_extract_records(df, type, table_name):
-        df = df.copy() if not df.empty else df
+        df = df.copy() if not df.empty else df  # 额外复制一份会不会过多占用内存
 
         if not df.empty:
             if type == 'missing_records':  # 下游系统数据丢失
@@ -16,7 +16,7 @@ class PostProcessing:
                 df.loc[:, 'gap类型'] = '上游系统数据丢失'
             df.loc[:, 'Source'] = ''
             df.loc[:, '表名'] = table_name
-            PostProcessing.save_file(df)
+            PostProcessing.save_file(df, table_name)
         # del df
 
     @staticmethod
@@ -61,22 +61,30 @@ class PostProcessing:
             result_rows.append(downstream)
 
         result = pd.DataFrame(result_rows)
-        PostProcessing.save_file(result)
+        PostProcessing.save_file(result, down_table_name)
         # del df
         # del result
 
     @staticmethod
-    def save_file(df):
+    def save_file(df, tablename):
         cols = df.columns.tolist()
         cols.insert(0, cols.pop(cols.index('gap类型')))
         cols.insert(1, cols.pop(cols.index('Source')))
         cols.insert(2, cols.pop(cols.index('表名')))
         df = df[cols]
-        if not os.path.exists('result.csv'):
-            df.to_csv("result.csv", mode='a', index=False)
+        if len(tablename.split("\\")) > 1:
+            direct_path = os.path.join(os.path.dirname(__file__), 'Output', f'{tablename.split("\\")[-1]}.csv')
         else:
-            df.to_csv("result.csv", mode='a', index=False, header=False)
+            direct_path = os.path.join(os.path.dirname(__file__), 'Output', f'{tablename}.csv')
+        if not os.path.exists(direct_path):
+            df.to_csv(direct_path, mode='a', index=False)
+        else:
+            df.to_csv(direct_path, mode='a', index=False, header=False)
 
         # ⚠⚠⚠ 注意写入模式 ! 建议每个函数后都单独调用 save_file函数 及时释放内存
         # del df
         # 如果性能不佳 请使用  del df   手动回收内存
+
+        # 可能存在隐患：
+        # 1. 没有在main.py中 设置每次运行主程序前先清空输出文件夹
+        #   也可以获取当天日期后在创建子文件夹  例如 Output/2023-10-01/
