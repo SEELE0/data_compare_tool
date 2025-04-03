@@ -6,9 +6,8 @@ import os
 class PostProcessing:
 
     @staticmethod
-    def process_missing_extract_records(df, type, table_name):
+    def process_missing_extract_records(df, type, table_name, key_columns):
         df = df.copy() if not df.empty else df  # 额外复制一份会不会过多占用内存
-
         if not df.empty:
             if type == 'missing_records':  # 下游系统数据丢失
                 df.loc[:, 'gap类型'] = '下游系统数据丢失'
@@ -16,7 +15,7 @@ class PostProcessing:
                 df.loc[:, 'gap类型'] = '上游系统数据丢失'
             df.loc[:, 'Source'] = ''
             df.loc[:, '表名'] = table_name
-            PostProcessing.save_file(df, table_name)
+            PostProcessing.save_file(df, table_name, key_columns)
         # del df
 
     @staticmethod
@@ -61,16 +60,24 @@ class PostProcessing:
             result_rows.append(downstream)
 
         result = pd.DataFrame(result_rows)
-        PostProcessing.save_file(result, down_table_name)
+        PostProcessing.save_file(result, down_table_name )
         # del df
         # del result
 
     @staticmethod
-    def save_file(df, tablename):
+    def save_file(df, tablename, key_columns=None):
+        if key_columns is None:
+            key_columns = []
+        else:
+            key_columns = key_columns.split(',')
         cols = df.columns.tolist()
         cols.insert(0, cols.pop(cols.index('gap类型')))
         cols.insert(1, cols.pop(cols.index('Source')))
         cols.insert(2, cols.pop(cols.index('表名')))
+        index_insert = 3
+        for key in key_columns:
+            cols.insert(index_insert, cols.pop(cols.index(key)))
+            index_insert = index_insert+1
         df = df[cols]
         if len(tablename.split("\\")) > 1:
             direct_path = os.path.join(os.path.dirname(__file__), 'Output', f'{tablename.split("\\")[-1]}.csv')

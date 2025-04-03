@@ -60,6 +60,7 @@ if __name__ == '__main__':
                 find_different_records.set_index(config_row['key'].split(',')).index
             )]
 
+
         extra_records_df = MainActuator.find_extra_records(df1, df2)
         filtered_extra_df = extra_records_df[
             ~extra_records_df.set_index(config_row['key'].split(',')).index
@@ -75,9 +76,9 @@ if __name__ == '__main__':
         logger.info(f"================= 数据比对完成 =================")
         logger.info(f"================= 开始输出结果 =================")
         PostProcessing.process_missing_extract_records(filtered_missing_df, 'missing_records',
-                                                       config_row['TableName_DownStream'])
+                                                       config_row['TableName_DownStream'] , config_row['key'])
         PostProcessing.process_missing_extract_records(filtered_extra_df, 'extra_records',
-                                                       config_row['TableName_DownStream'])
+                                                       config_row['TableName_DownStream'] , config_row['key'])
         PostProcessing.process_diff_records(find_different_records, config_row['key'], config_row['TableName_Upstream'],
                                             config_row['TableName_DownStream'])
         logger.info(f"================= 结果输出完成 =================")

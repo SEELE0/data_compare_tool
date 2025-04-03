@@ -34,4 +34,6 @@ class Sourcefactory:
         #
         df1 = df1.filter(items=[columns1[col] for col in same_columns])
         df2 = df2.filter(items=[columns2[col] for col in same_columns])
+        df1 = df1.rename(columns=lambda x: x.lower())
+        df2 = df2.rename(columns=lambda x: x.lower())
         return df1, df2

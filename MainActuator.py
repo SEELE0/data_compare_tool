@@ -64,8 +64,8 @@ class MainActuator:
             new_df = pd.DataFrame(new_df_data)
             return new_df
 
-        df1 = df1.rename(columns=lambda x: x.lower())
-        df2 = df2.rename(columns=lambda x: x.lower())
+        # df1 = df1.rename(columns=lambda x: x.lower())
+        # df2 = df2.rename(columns=lambda x: x.lower())
         key_columns = key_columns.split(',')
         merge_df = df1.merge(df2, how='inner', on=key_columns, suffixes=('_df1', '_df2'))
         # key_columns | col1_df1 | col2_df1 | col3_df1 | col1_df2 | col2_df2 | col3_df2
